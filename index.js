@@ -24,16 +24,18 @@ const invoke = config => (fnName, args = {}) => {
   return config.getUserToken().then(token => {
     const url = `${config.baseUrl}/${fnName}`
 
-    return window.fetch(url, {
-      method: 'POST',
-      redirect: 'follow',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer: ${token}`
-      },
-      body: JSON.stringify(args)
-    })
+    return window
+      .fetch(url, {
+        method: 'POST',
+        redirect: 'follow',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer: ${token}`
+        },
+        body: JSON.stringify(args)
+      })
+      .then(response => response.json())
   })
 }
 
